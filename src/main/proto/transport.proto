@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package transports;
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service RouteService {
+  rpc GetRoutes(Path) returns (Root);
+}
+
+message Root {
+  repeated Route routes = 1;
+  repeated Alert alerts = 2;
+  string regionName = 3;
+  bool imperial = 4;
+  double processingTimeMs = 5;
+}
+
+message Alert {
+  string id = 1;
+  string origin = 2;
+  string cause = 3;
+  string effect = 4;
+  string header = 5;
+  string description = 6;
+  string url = 7;
+  string validFrom = 8;
+  string validUntil = 9;
+  string operator = 10;
+  string countryIso = 11;
+  string countryUrl = 12;
+  string sectionIds = 13;
+  repeated InformedEntity informedEntity = 14;
+}
+
+message InformedEntity {
+  string routeId = 1;
+}
+
+message Route {
+  string id = 1;
+  int32 duration = 2;
+  int32 transfers = 3;
+  repeated Section sections = 4;
+
+  int32 walkingDistance = 5;
+  int32 walkingDuration = 6;
+  double walkingCalories = 7;
+  double co2EmissionKg = 8;
+  double co2SavedComparedToCarKg = 9;
+
+  string regionName = 10;
+}
+
+message Path {
+  string origin = 1;
+  string destination = 2;
+  string apiKey = 3;
+  string capiHost = 4;
+  int32 port = 5;
+  optional string arrivalTime = 6;
+  optional string departureTime = 7;
+  optional string transfers = 8;
+  optional string geometry = 9;
+  optional string transport = 10;
+  optional string maxRoutes = 11;
+  optional string lang = 12;
+}
+
+message Location {
+  double lat = 1;
+  double lng = 2;
+}
+
+message Place {
+  string name = 1;
+  string urlStopName = 2;
+  string type = 3;
+  Location location = 4;
+  string id = 5;
+  string countryIso = 6;
+  string countryUrl = 7;
+  int32 wheelchairBoarding = 8;
+  string description = 9;
+  string stopCode = 10;
+}
+
+message TravelSummary {
+  int32 duration = 1;
+  int32 length = 2;
+}
+
+message Departure {
+  string time = 1;
+  string platformCode = 2;
+  string rtDeparture = 3;
+  Place place = 4;
+}
+
+message Arrival {
+  string time = 1;
+  string rtArrival = 2;
+  Place place = 3;
+}
+
+message Transport {
+  string mode = 1;
+  string id = 2;
+  string countryIso = 3;
+  string countryUrl = 4;
+  string headsign = 5;
+  string shortName = 6;
+  string urlRouteShortName = 7;
+  string longName = 8;
+  string color = 9;
+  string textColor = 10;
+  int32 wheelchairAccessible = 11;
+  string name = 12;
+}
+
+message IntermediateStop {
+  Departure departure = 1;
+}
+
+message Section {
+  string id = 1;
+  string type = 2;
+  TravelSummary travelSummary = 3;
+  Departure departure = 4;
+  Arrival arrival = 5;
+  string polyline = 6;
+  Transport transport = 7;
+  repeated IntermediateStop intermediateStops = 8;
+}
