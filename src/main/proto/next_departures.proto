@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service NextDeparturesService {
+  rpc GetNextDepartures(NextDeparturesRequest) returns (NextDeparturesResponse);
+}
+
+message NextDeparturesRequest {
+  string location = 1;
+  string stopId = 2;
+  string regionName = 3;
+  Key key = 4;
+  string countryIso = 5;
+  optional string requestTime = 6;
+  optional int32 radius = 7;
+  optional int32 results = 8;
+  optional int32 barrierMode = 9;
+  optional string lang = 10;
+}
+
+message NextDeparturesResponse {
+  repeated StopDeparture stop_departures = 1;
+  bool imperial = 2;
+  string local_date = 3;
+  string region_name = 4;
+  repeated Alert alerts = 5;
+  int64 request_time = 6;
+  double processing_time_ms = 7;
+  string local_time = 8;
+}
+
+message StopDeparture {
+  repeated DepartureItem departure_list = 1;
+  string country_iso = 2;
+  string stop_id = 3;
+  double stop_lon = 4;
+  string stop_name = 5;
+  double stop_lat = 6;
+  string country_url = 7;
+  int32 wheelchair_boarding = 8;
+  string stop_code = 9;
+  string stop_desc = 10;
+  optional string url_stop_name = 11;
+  repeated Agency agencies = 12;
+}
+
+message DepartureItem {
+  string country_iso = 1;
+  string rt_date = 2;
+  string date = 3;
+  string trip_id = 4;
+  optional string route_short_name = 5;
+  optional string route_color = 6;
+  string rt_departure_time = 7;
+  string departure_time = 8;
+  string trip_headsign = 9;
+  int32 wheelchair_accessible = 10;
+  string agency_id = 11;
+  optional string route_text_color = 12;
+  optional string route_desc = 13;
+  optional string url_route_short_name = 14;
+  string country_url = 15;
+  string route_id = 16;
+  string route_type = 17;
+  string platform_code = 18;
+  optional string route_long_name = 19;
+  optional string url_route_long_name = 20;
+}
+
+message Agency {
+  string agency_url = 1;
+  string country_iso = 2;
+  string agency_id = 3;
+  optional string url_agency_name = 4;
+  string country_url = 5;
+  optional string agency_phone = 6;
+  string agency_name = 7;
+}
+

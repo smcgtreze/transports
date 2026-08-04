@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package transports;
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+message Alert {
+  string id = 1;
+  string origin = 2;
+  string cause = 3;
+  string effect = 4;
+  string header = 5;
+  string description = 6;
+  string url = 7;
+  string validFrom = 8;
+  string validUntil = 9;
+  string operator = 10;
+  optional string countryIso = 11;
+  optional string countryUrl = 12;
+  optional string sectionIds = 13;
+  repeated InformedEntity informedEntity = 14;
+}
+
+message InformedEntity {
+  string routeId = 1;
+  optional string countryIso = 2;
+  optional string countryUrl = 3;
+  optional string stopId = 4;
+}
+
+message Key{
+  string apiKey = 1;
+  string capiHost = 2;
+  int32 port = 3;
+}

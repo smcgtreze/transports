@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package transports;
 
+import "common.proto";
+
 option java_package = "com.example.transports";
 option java_multiple_files = true;
 
@@ -15,27 +17,6 @@ message Root {
   string regionName = 3;
   bool imperial = 4;
   double processingTimeMs = 5;
-}
-
-message Alert {
-  string id = 1;
-  string origin = 2;
-  string cause = 3;
-  string effect = 4;
-  string header = 5;
-  string description = 6;
-  string url = 7;
-  string validFrom = 8;
-  string validUntil = 9;
-  string operator = 10;
-  string countryIso = 11;
-  string countryUrl = 12;
-  string sectionIds = 13;
-  repeated InformedEntity informedEntity = 14;
-}
-
-message InformedEntity {
-  string routeId = 1;
 }
 
 message Route {
@@ -56,16 +37,14 @@ message Route {
 message Path {
   string origin = 1;
   string destination = 2;
-  string apiKey = 3;
-  string capiHost = 4;
-  int32 port = 5;
-  optional string arrivalTime = 6;
-  optional string departureTime = 7;
-  optional string transfers = 8;
-  optional string geometry = 9;
-  optional string transport = 10;
-  optional string maxRoutes = 11;
-  optional string lang = 12;
+  Key key = 3;
+  optional string arrivalTime = 4;
+  optional string departureTime = 5;
+  optional string transfers = 6;
+  optional string geometry = 7;
+  optional string transport = 8;
+  optional string maxRoutes = 9;
+  optional string lang = 10;
 }
 
 message Location {
