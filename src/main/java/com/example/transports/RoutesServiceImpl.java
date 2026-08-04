@@ -14,12 +14,12 @@ import com.example.transports.Path;
 
 
 public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase {
-        @Override
+    @Override
     public void getRoutes(Path request, StreamObserver<Root> responseObserver) {
 
         try {
             // Build your HTTPS URL
-            String url = "https://capi." + request.getCapiHost() + ":8443/routes"
+            String url = "https://capi." + request.getKey().getCapiHost() + ":8443/routes"
                 + "?origin=" + request.getOrigin()
                 + "&destination=" + request.getDestination();
 
@@ -27,8 +27,8 @@ public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase {
 
             var httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .header("capi-key", "Bearer " + request.getApiKey())
-                .header("capi-host", request.getCapiHost())
+                .header("capi-key", "Bearer " + request.getKey().getApiKey())
+                .header("capi-host", request.getKey().getCapiHost())
                 .GET()
                 .build();
 
