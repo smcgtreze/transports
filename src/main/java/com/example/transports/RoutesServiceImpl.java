@@ -2,55 +2,38 @@ package com.example.transports;
 
 import io.grpc.stub.StreamObserver;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.protobuf.util.JsonFormat;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import com.example.transports.*;
-import com.example.transports.Path;
+import com.google.protobuf.Message;
 
 
-public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase {
+public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase implements ServiceImpl<Path, Root> {
     @Override
     public void getRoutes(Path request, StreamObserver<Root> responseObserver) {
-
-        try {
-            // Build your HTTPS URL
-            String url = "https://capi." + request.getKey().getCapiHost() + ":8443/routes"
-                + "?origin=" + request.getOrigin()
-                + "&destination=" + request.getDestination();
-
-            var httpClient = HttpClient.newHttpClient();
-
-            var httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("capi-key", "Bearer " + request.getKey().getApiKey())
-                .header("capi-host", request.getKey().getCapiHost())
-                .GET()
-                .build();
-
-            var httpResponse = httpClient.send(
-                httpRequest,
-                HttpResponse.BodyHandlers.ofString()
-            );
-
-            String json = httpResponse.body();
-
-            // Parse entire JSON into Root
-            Root.Builder builder = Root.newBuilder();
-            JsonFormat.parser().ignoringUnknownFields().merge(json, builder);
-            Root root = builder.build();
-
-            // Return the Root object
-            responseObserver.onNext(root);
-            responseObserver.onCompleted();
-
-        } catch (Exception e) {
-            responseObserver.onError(e);
-        }
+        getService(request, responseObserver);
     }
 
+    @Override
+    public String getHttpArguments(Path request) {
+        return "?origin=" + request.getOrigin()
+                + "&destination=" + request.getDestination();
+    }
+
+    @Override
+    public String getEndpoint() {
+        return "routes";
+    }
+
+    @Override
+    public String getCapiHost(Path request) {
+        return request.getKey().getCapiHost();
+    }
+
+    @Override
+    public String getApiKey(Path request) {
+        return request.getKey().getApiKey();
+    }
+
+    @Override
+    public Message.Builder newResponseBuilder() {
+        return Root.newBuilder();
+    }
 }
