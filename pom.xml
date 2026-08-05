@@ -49,33 +49,6 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
         </dependency>
-        <!-- Core streaming API -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.15.2</version>
-        </dependency>
-
-        <!-- Data binding (ObjectMapper lives here) -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.2</version>
-        </dependency>
-
-        <!-- Annotations (like @JsonProperty, @JsonIgnore) -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.15.2</version>
-        </dependency>
-
-        <!-- Optional: Java 8 date/time support -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.15.2</version>
-        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
