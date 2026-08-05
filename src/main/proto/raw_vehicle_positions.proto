@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service VehiclePositionsService {
+  rpc GetVehiclePositions(VehiclePositionsRequest) returns (VehiclePositionsResponse);
+}
+
+message VehiclePositionsRequest {
+  Key key = 1;
+  optional string region_name = 2;
+  optional string route_id = 3;
+  optional string lang = 4;
+  string bounding_box = 5;
+  optional string countryIso = 6;
+}
+
+message VehiclePositionsResponse {
+  int64 request_time = 1;
+  double processing_time_ms = 2;
+  repeated VehiclePosition vehicles = 3;
+  string region_name = 4;
+}
+
+message VehiclePosition {
+  optional string vehicle_id = 1;
+  double lon = 2;
+  string trip_id = 3;
+  string country_url = 4;
+  optional string route_color = 5;
+  string trip_headsign = 6;
+  optional string timestamp = 7;
+  string route_id = 8;
+  int32 age_seconds = 9;
+  optional string route_text_color = 10;
+  optional string route_short_name = 11;
+  string position_type = 12;
+  string country_iso = 13;
+  optional string route_long_name = 14;
+  optional string bearing = 15;
+  optional string url_route_short_name = 16;
+  double lat = 17;
+  optional string url_route_long_name = 18;
+}

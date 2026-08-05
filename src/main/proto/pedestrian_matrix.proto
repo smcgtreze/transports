@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service PedestrianMatrixService {
+  rpc GetPedestrianMatrix(PedestrianMatrixRequest) returns (PedestrianMatrixResponse);
+}
+
+message PedestrianMatrixRequest {
+  Key key = 1;
+  repeated string source_locations = 2;
+  repeated string destination_locations = 3;
+  optional string annotations = 4;
+}
+
+message PedestrianMatrixResponse {
+  string code = 1;
+  repeated Waypoint sources = 2;
+  repeated Waypoint destinations = 3;
+  repeated DurationRow durations = 4;
+  repeated DistanceRow distances = 5;
+}
+
+message DurationRow {
+  repeated double values = 1;
+}
+
+message DistanceRow {
+  repeated double values = 1;
+}

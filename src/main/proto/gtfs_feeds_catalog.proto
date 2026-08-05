@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service GtfsFeedsCatalogService {
+  rpc GetGtfsFeedsCatalog(GtfsFeedsCatalogRequest) returns (GtfsFeedsCatalogResponse);
+}
+
+message GtfsFeedsCatalogRequest {
+  Key key = 1;
+  optional string country_iso = 2;
+}
+
+message GtfsFeedsCatalogResponse {
+  repeated GtfsCountry countries = 1;
+}
+
+message GtfsCountry {
+  string country_iso = 1;
+  string country_name = 2;
+  repeated GtfsFeed feeds = 3;
+  string country_url = 4;
+  string country_region = 5;
+}
+
+message GtfsFeed {
+  int32 feed_id = 1;
+  int32 feed_group_id = 2;
+  repeated GtfsDerivative derivatives = 3;
+  string feed_name = 4;
+  string feed_group_name = 5;
+}
+
+message GtfsDerivative {
+  string creation_date = 1;
+  repeated RouteType route_types = 2;
+  string path = 3;
+  string license_name = 4;
+  string file_name = 5;
+  string extension = 6;
+  string type = 7;
+  string license_link = 8;
+  string content_hash = 9;
+  optional string public_link = 10;
+  double size = 11;
+  int32 feed_id = 12;
+  string sha1 = 13;
+  string sha256 = 14;
+}
+
+message RouteType {
+  int32 route_type = 1;
+  string route_type_name = 2;
+  string route_type_group = 3;
+}

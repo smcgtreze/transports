@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service PedestrianRouteService {
+  rpc GetPedestrianRoute(PedestrianRouteRequest) returns (PedestrianRouteResponse);
+}
+
+message PedestrianRouteRequest {
+  Key key = 1;
+  optional int32 alternatives = 2;
+  optional string overview = 3;
+  optional string geometries = 4;
+  optional bool steps = 5;
+  optional string annotations = 6;
+  optional bool skip_waypoints = 7;
+  optional string region_name = 8;
+  optional string lang = 9;
+}
+
+message PedestrianRouteResponse {
+  string code = 1;
+  repeated PedestrianRoute routes = 2;
+  repeated Waypoint waypoints = 3;
+}
+
+message PedestrianRoute {
+  repeated Leg legs = 1;
+  double duration = 2;
+  double distance = 3;
+  string weight_name = 4;
+  string geometry = 5;
+  double weight = 6;
+}
+
+message Leg {
+  string summary = 1;
+  Annotation annotation = 2;
+  double duration = 3;
+  repeated Step steps = 4;
+  double distance = 5;
+  double weight = 6;
+}
+
+message Annotation {
+  repeated double distance = 1;
+  repeated double duration = 2;
+}
+
+message Step {
+  string mode = 1;
+  double duration = 2;
+  optional string name = 3;
+  string geometry = 4;
+  double weight = 5;
+  string driving_side = 6;
+  repeated Intersection intersections = 7;
+  double distance = 8;
+  Maneuver maneuver = 9;
+  optional string ref = 10;
+}
+
+message Intersection {
+  repeated bool entry = 1;
+  optional int32 out = 2;
+  repeated double location = 3;
+  repeated int32 bearings = 4;
+  optional int32 in = 5;
+}
+
+message Maneuver {
+  int32 bearing_before = 1;
+  string modifier = 2;
+  string type = 3;
+  repeated double location = 4;
+  int32 bearing_after = 5;
+}

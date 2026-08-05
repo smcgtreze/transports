@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service StopsInRadiusService {
+  rpc GetStopsInRadius(StopsInRadiusRequest) returns (StopsInRadiusResponse);
+}
+
+message StopsInRadiusRequest {
+  string location = 1;
+  Key key = 2;
+  int32 radius = 3;
+  optional string limit = 4;
+}
+
+message StopsInRadiusResponse {
+  bool imperial = 1;
+  string region_name = 2;
+  repeated Stop stops = 3;
+  double processing_time_ms = 4;
+}
+
+message Stop {
+  string country_iso = 1;
+  string stop_id = 2;
+  double stop_lon = 3;
+  string stop_name = 4;
+  double stop_lat = 5;
+  string stop_type_group = 6;
+  string country_url = 7;
+  int32 wheelchair_boarding = 8;
+  repeated StopRoute routes = 9;
+  string stop_code = 10;
+  string stop_desc = 11;
+  string url_stop_name = 12;
+}
+
+message StopRoute {
+  string country_iso = 1;
+  optional string route_short_name = 2;
+  optional string route_color = 3;
+  string url_route_long_name = 4;
+  string trip_headsign = 5;
+  optional string route_text_color = 6;
+  optional string url_route_short_name = 7;
+  string country_url = 8;
+  string route_id = 9;
+  string route_type = 10;
+  optional string route_long_name = 11;
+}

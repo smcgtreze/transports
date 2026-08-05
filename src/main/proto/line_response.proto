@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package transports;
+
+import "common.proto";
+
+option java_package = "com.example.transports";
+option java_multiple_files = true;
+
+service LineService {
+  rpc GetLine(LineRequest) returns (LineResponse);
+}
+
+message LineRequest {
+  string route_hash2 = 1;
+  Key key = 2;
+  string countryIso = 3;
+  string region_name = 4;
+  optional string lang = 5;
+  optional string date = 6;
+}
+
+message LineResponse {
+  RouteInfo route_info = 1;
+  string region_name = 2;
+  repeated Direction directions = 3;
+  double processing_time_ms = 4;
+  repeated Alert alerts = 5;
+}
+
+message RouteInfo {
+  string url_route_short_name = 1;
+  optional string route_color = 2;
+  string route_short_name = 3;
+  string local_time = 4;
+  string country_url = 5;
+  string route_type_name = 6;
+  optional string url_route_long_name = 7;
+  string route_hash2 = 8;
+  optional string route_text_color = 9;
+  optional string route_long_name = 10;
+  AgencyInfo agency_info = 11;
+  bool in_service = 12;
+  string route_timezone = 13;
+  string route_type_group = 14;
+}
+
+message AgencyInfo {
+  string url_agency_name = 1;
+  string country_url = 2;
+  string agency_hash = 3;
+  string agency_name = 4;
+}
+
+message Direction {
+  string dir_hash = 1;
+  string polyline = 2;
+  string dir_name = 3;
+  repeated DirectionStop stops = 4;
+  repeated DirectionTrip trips = 5;
+  bool in_service = 6;
+}
+
+message DirectionStop {
+  double stop_lon = 1;
+  double stop_lat = 2;
+  int32 wheelchair_boarding = 3;
+  string url_stop_name = 4;
+  string stop_hash1 = 5;
+  string country_url = 6;
+  string stop_name = 7;
+}
+
+message DirectionTrip {
+  string trip_id = 1;
+  repeated string stop_times = 2;
+  optional int32 wheelchair_accessible = 3;
+}
