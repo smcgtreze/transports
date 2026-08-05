@@ -13,8 +13,32 @@ public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase imp
 
     @Override
     public String getHttpArguments(Path request) {
-        return "?origin=" + request.getOrigin()
+        String httpArguments = "?origin=" + request.getOrigin()
                 + "&destination=" + request.getDestination();
+        
+        if (request.getArrivalTime() != null) {
+            httpArguments += "&arrivalTime=" + request.getArrivalTime();
+        }
+        if (request.getDepartureTime() != null) {
+            httpArguments += "&departureTime=" + request.getDepartureTime();
+        }
+        if (request.getTransfers() != null) {
+            httpArguments += "&transfers=" + request.getTransfers();
+        }
+        if (request.getGeometry() != null) {
+            httpArguments += "&geometry=" + request.getGeometry();
+        }
+        if (request.getTransport() != null) {
+            httpArguments += "&transport=" + request.getTransport();
+        }
+        if (request.getMaxRoutes() != null) {
+            httpArguments += "&maxRoutes=" + request.getMaxRoutes();
+        }
+        if (request.getLang() != null) {
+            httpArguments += "&lang=" + request.getLang();
+        }
+
+        return httpArguments;
     }
 
     @Override

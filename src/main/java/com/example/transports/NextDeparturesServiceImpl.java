@@ -13,10 +13,28 @@ public class NextDeparturesServiceImpl extends NextDeparturesServiceGrpc.NextDep
 
     @Override
     public String getHttpArguments(NextDeparturesRequest request) {
-        return "?location=" + request.getLocation()
+        String httpArguments = "?location=" + request.getLocation()
             + "&stopId=" + request.getStopId()
             + "&regionName=" + request.getRegionName()
             + "&countryIso=" + request.getCountryIso();
+        
+        if (request.getRequestTime() != null) {
+            httpArguments += "&requestTime=" + request.getRequestTime();
+        }
+        if (request.getRadius() != 0) {
+            httpArguments += "&radius=" + request.getRadius();
+        }
+        if (request.getResults() != 0) {
+            httpArguments += "&results=" + request.getResults();
+        }
+        if (request.getBarrierMode() != 0) {
+            httpArguments += "&barrierMode=" + request.getBarrierMode();
+        }
+        if (request.getLang() != null) {
+            httpArguments += "&lang=" + request.getLang();
+        }
+        
+        return httpArguments;
     }
 
     @Override
