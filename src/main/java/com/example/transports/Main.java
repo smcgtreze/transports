@@ -1,9 +1,15 @@
 package com.example.transports;
 
+import java.awt.BorderLayout;
 import java.net.URI;
 import java.net.http.HttpClient;
 
-import com.example.transports.Root;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
+import com.google.protobuf.util.JsonFormat;
 
 public class Main {
     private static int httpPort = 8443;
@@ -25,33 +31,6 @@ public class Main {
         }).join();
     }
 
-    // public static void main(String[] args) throws Exception {
-    //     RoutesServiceImpl routesService = new RoutesServiceImpl();
-    //     routesService.getRoutes(
-    //         Path.newBuilder()
-    //             .setOrigin("41.2054279594662,-8.549259243833832")
-    //             .setDestination("41.158195900186485,-8.643438221307983")
-    //             .setCapiHost(capiHost)
-    //             .setApiKey(capiKey)
-    //             .build(),
-    //         new io.grpc.stub.StreamObserver<Root>() {
-    //             @Override
-    //             public void onNext(Root root) {
-    //                 printRoot(root);
-    //             }
-
-    //             @Override
-    //             public void onError(Throwable t) {
-    //                 System.err.println("Error: " + t.getMessage());
-    //             }
-
-    //             @Override
-    //             public void onCompleted() {
-    //                 System.out.println("Completed receiving routes.");
-    //             }
-    //         });
-    // }
-
     public static void main(String[] args) throws Exception {
         NextDeparturesServiceImpl nextDeparturesService = new NextDeparturesServiceImpl();
         nextDeparturesService.getNextDepartures(
@@ -67,7 +46,7 @@ public class Main {
             new io.grpc.stub.StreamObserver<NextDeparturesResponse>() {
                 @Override
                 public void onNext(NextDeparturesResponse response) {
-                    printNextDeparturesRoot(response);
+                    printMessage(response);
                 }
 
                 @Override
@@ -82,59 +61,29 @@ public class Main {
             });
     }
 
-    private static void printRoot(Root root) {
-        System.out.println("Region: " + root.getRegionName());
-        System.out.println("Imperial: " + root.getImperial());
-        System.out.println("Processing Time: " + root.getProcessingTimeMs());
+    private static <T extends com.google.protobuf.Message> void printMessage( T response) {
+        try {
+            String rendered = JsonFormat.printer()
+                .print(response);
 
-        for (Route route : root.getRoutesList()) {
-            System.out.println("Route ID: " + route.getId());
-            System.out.println("Duration: " + route.getDuration());
-            System.out.println("Transfers: " + route.getTransfers());
-            System.out.println("Walking Distance: " + route.getWalkingDistance());
-            System.out.println("Walking Calories: " + route.getWalkingCalories());
-            System.out.println("Region Name: " + route.getRegionName());
-
-            for (Section s : route.getSectionsList()) {
-                System.out.println("  Section ID: " + s.getId());
-                System.out.println("  Type: " + s.getType());
-                System.out.println("  Departure: " + s.getDeparture().getTime());
-                System.out.println("  Arrival: " + s.getArrival().getTime());
-                System.out.println("  Transport Mode: " + s.getTransport().getMode());
-            }
-        }
-
-        for (Alert alert : root.getAlertsList()) {
-            System.out.println("ALERT: " + alert.getHeader());
-
-            for (InformedEntity ie : alert.getInformedEntityList()) {
-                System.out.println("  Informed Route ID: " + ie.getRouteId());
-            }
+            System.out.println(rendered);
+            showInWindow("Route display", rendered);
+        } catch (Exception e) {
+            System.err.println("Unable to format response: " + e.getMessage());
         }
     }
 
-    private static void printNextDeparturesRoot(NextDeparturesResponse response) {
-        System.out.println("Region: " + response.getRegionName());
-        System.out.println("Imperial: " + response.getImperial());
-        System.out.println("Processing Time: " + response.getProcessingTimeMs());
-        System.out.println("Local Time: " + response.getLocalTime());
+    private static void showInWindow(String title, String content) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame(title);
+            JTextArea textArea = new JTextArea(content, 24, 80);
+            textArea.setEditable(false);
 
-        for (StopDeparture stop : response.getStopDeparturesList()) {
-            System.out.println("Stop: " + stop.getStopName() + " (" + stop.getStopId() + ")");
-
-            for (DepartureItem departure : stop.getDepartureListList()) {
-                System.out.println("  Departure: " + departure.getDepartureTime() + " -> " + departure.getTripHeadsign());
-                System.out.println("  Route: " + departure.getRouteShortName());
-            }
-        }
-
-        for (Alert alert : response.getAlertsList()) {
-            System.out.println("ALERT: " + alert.getHeader());
-
-            for (InformedEntity informedEntity : alert.getInformedEntityList()) {
-                System.out.println("  Informed Route ID: " + informedEntity.getRouteId());
-            }
-        }
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
+            frame.pack();
+            frame.setVisible(true);
+        });
     }
 }
 
