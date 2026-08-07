@@ -12,13 +12,7 @@ public class GtfsFeedsCatalogServiceImpl extends GtfsFeedsCatalogServiceGrpc.Gtf
 
     @Override
     public String getHttpArguments(GtfsFeedsCatalogRequest request) {
-        String httpArguments = "";
-
-        if (request.getCountryIso() != null && !request.getCountryIso().isEmpty()) {
-            httpArguments = "?countryIso=" + request.getCountryIso();
-        }
-
-        return httpArguments;
+        return appendQueryParam("", "countryIso", request.getCountryIso());
     }
 
     @Override

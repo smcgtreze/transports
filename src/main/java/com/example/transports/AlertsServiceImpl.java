@@ -12,18 +12,12 @@ public class AlertsServiceImpl extends AlertsServiceGrpc.AlertsServiceImplBase i
 
     @Override
     public String getHttpArguments(AlertsRequest request) {
-        String httpArguments = "?regionName=" + request.getRegionName()
-            + "&countryIso=" + request.getCountryIso();
-
-        if (request.getRouteId() != null && !request.getRouteId().isEmpty()) {
-            httpArguments += "&routeId=" + request.getRouteId();
-        }
-        if (request.getOperatorId() != null && !request.getOperatorId().isEmpty()) {
-            httpArguments += "&operatorId=" + request.getOperatorId();
-        }
-        if (request.getLang() != null && !request.getLang().isEmpty()) {
-            httpArguments += "&lang=" + request.getLang();
-        }
+        String httpArguments = "";
+        httpArguments = appendQueryParam(httpArguments, "regionName", request.getRegionName());
+        httpArguments = appendQueryParam(httpArguments, "countryIso", request.getCountryIso());
+        httpArguments = appendQueryParam(httpArguments, "routeId", request.getRouteId());
+        httpArguments = appendQueryParam(httpArguments, "operatorId", request.getOperatorId());
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
 
         return httpArguments;
     }

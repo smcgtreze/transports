@@ -13,27 +13,17 @@ public class NextDeparturesServiceImpl extends NextDeparturesServiceGrpc.NextDep
 
     @Override
     public String getHttpArguments(NextDeparturesRequest request) {
-        String httpArguments = "?location=" + request.getLocation()
-            + "&stopId=" + request.getStopId()
-            + "&regionName=" + request.getRegionName()
-            + "&countryIso=" + request.getCountryIso();
-        
-        if (request.getRequestTime() != null) {
-            httpArguments += "&requestTime=" + request.getRequestTime();
-        }
-        if (request.getRadius() != 0) {
-            httpArguments += "&radius=" + request.getRadius();
-        }
-        if (request.getResults() != 0) {
-            httpArguments += "&results=" + request.getResults();
-        }
-        if (request.getBarrierMode() != 0) {
-            httpArguments += "&barrierMode=" + request.getBarrierMode();
-        }
-        if (request.getLang() != null) {
-            httpArguments += "&lang=" + request.getLang();
-        }
-        
+        String httpArguments = "";
+        httpArguments = appendQueryParam(httpArguments, "location", request.getLocation());
+        httpArguments = appendQueryParam(httpArguments, "countryIso", request.getCountryIso());
+        httpArguments = appendQueryParam(httpArguments, "stopId", request.getStopId());
+        httpArguments = appendQueryParam(httpArguments, "regionName", request.getRegionName());
+        httpArguments = appendQueryParam(httpArguments, "requestTime", request.getRequestTime());
+        httpArguments = appendQueryParam(httpArguments, "radius", request.getRadius(), false);
+        httpArguments = appendQueryParam(httpArguments, "results", request.getResults(), false);
+        httpArguments = appendQueryParam(httpArguments, "barrierMode", request.getBarrierMode(), false);
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
+
         return httpArguments;
     }
 

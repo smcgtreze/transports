@@ -14,30 +14,14 @@ public class PedestrianRouteServiceImpl extends PedestrianRouteServiceGrpc.Pedes
     public String getHttpArguments(PedestrianRouteRequest request) {
         String httpArguments = "";
 
-        if (request.getAlternatives() != 0) {
-            httpArguments += "?alternatives=" + request.getAlternatives();
-        }
-        if (request.getOverview() != null && !request.getOverview().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "overview=" + request.getOverview();
-        }
-        if (request.getGeometries() != null && !request.getGeometries().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "geometries=" + request.getGeometries();
-        }
-        if (request.getSteps()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "steps=" + request.getSteps();
-        }
-        if (request.getAnnotations() != null && !request.getAnnotations().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "annotations=" + request.getAnnotations();
-        }
-        if (request.getSkipWaypoints()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "skip_waypoints=" + request.getSkipWaypoints();
-        }
-        if (request.getRegionName() != null && !request.getRegionName().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "regionName=" + request.getRegionName();
-        }
-        if (request.getLang() != null && !request.getLang().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "lang=" + request.getLang();
-        }
+        httpArguments = appendQueryParam(httpArguments, "alternatives", request.getAlternatives(), false);
+        httpArguments = appendQueryParam(httpArguments, "overview", request.getOverview());
+        httpArguments = appendQueryParam(httpArguments, "geometries", request.getGeometries());
+        httpArguments = appendQueryParam(httpArguments, "steps", request.getSteps());
+        httpArguments = appendQueryParam(httpArguments, "annotations", request.getAnnotations());
+        httpArguments = appendQueryParam(httpArguments, "skip_waypoints", request.getSkipWaypoints());
+        httpArguments = appendQueryParam(httpArguments, "regionName", request.getRegionName());
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
 
         return httpArguments;
     }

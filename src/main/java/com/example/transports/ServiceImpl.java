@@ -18,6 +18,35 @@ public interface ServiceImpl<T, V extends Message> {
     String getApiKey(final T request);
     Message.Builder newResponseBuilder();
 
+    default String appendQueryParam(String existing, String name, String value) {
+        if (value == null || value.isBlank()) {
+            return existing;
+        }
+        return existing + (existing.isEmpty() ? "?" : "&") + name + "=" + encode(value);
+    }
+
+    default String appendQueryParam(String existing, String name, boolean value) {
+        if (!value) {
+            return existing;
+        }
+        return existing + (existing.isEmpty() ? "?" : "&") + name + "=" + value;
+    }
+
+    default String appendQueryParam(String existing, String name, int value) {
+        return existing + (existing.isEmpty() ? "?" : "&") + name + "=" + value;
+    }
+
+    default String appendQueryParam(String existing, String name, int value, boolean includeWhenZero) {
+        if (!includeWhenZero && value == 0) {
+            return existing;
+        }
+        return existing + (existing.isEmpty() ? "?" : "&") + name + "=" + value;
+    }
+
+    default String encode(String value) {
+        return java.net.URLEncoder.encode(value, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
     default void getService(final T request, StreamObserver<V> responseObserver) {
         try {
             String url = "https://capi." + getCapiHost(request) + ":" + PORT + "/" + getEndpoint()

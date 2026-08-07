@@ -12,16 +12,12 @@ public class LineServiceImpl extends LineServiceGrpc.LineServiceImplBase impleme
 
     @Override
     public String getHttpArguments(LineRequest request) {
-        String httpArguments = "?routeHash2=" + request.getRouteHash2()
-            + "&countryIso=" + request.getCountryIso()
-            + "&regionName=" + request.getRegionName();
-
-        if (request.getLang() != null && !request.getLang().isEmpty()) {
-            httpArguments += "&lang=" + request.getLang();
-        }
-        if (request.getDate() != null && !request.getDate().isEmpty()) {
-            httpArguments += "&date=" + request.getDate();
-        }
+        String httpArguments = "";
+        httpArguments = appendQueryParam(httpArguments, "routeHash2", request.getRouteHash2());
+        httpArguments = appendQueryParam(httpArguments, "countryIso", request.getCountryIso());
+        httpArguments = appendQueryParam(httpArguments, "regionName", request.getRegionName());
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
+        httpArguments = appendQueryParam(httpArguments, "date", request.getDate());
 
         return httpArguments;
     }

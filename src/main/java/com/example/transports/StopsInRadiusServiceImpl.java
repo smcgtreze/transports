@@ -12,12 +12,10 @@ public class StopsInRadiusServiceImpl extends StopsInRadiusServiceGrpc.StopsInRa
 
     @Override
     public String getHttpArguments(StopsInRadiusRequest request) {
-        String httpArguments = "?location=" + request.getLocation()
-            + "&radius=" + request.getRadius();
-
-        if (request.getLimit() != null && !request.getLimit().isEmpty()) {
-            httpArguments += "&limit=" + request.getLimit();
-        }
+        String httpArguments = "";
+        httpArguments = appendQueryParam(httpArguments, "location", request.getLocation());
+        httpArguments = appendQueryParam(httpArguments, "radius", request.getRadius());
+        httpArguments = appendQueryParam(httpArguments, "limit", request.getLimit());
 
         return httpArguments;
     }

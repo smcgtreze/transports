@@ -15,14 +15,12 @@ public class PedestrianMatrixServiceImpl extends PedestrianMatrixServiceGrpc.Ped
         String httpArguments = "";
 
         if (!request.getSourceLocationsList().isEmpty()) {
-            httpArguments += "?sourceLocations=" + String.join(",", request.getSourceLocationsList());
+            httpArguments = appendQueryParam(httpArguments, "sourceLocations", String.join(",", request.getSourceLocationsList()));
         }
         if (!request.getDestinationLocationsList().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "destinationLocations=" + String.join(",", request.getDestinationLocationsList());
+            httpArguments = appendQueryParam(httpArguments, "destinationLocations", String.join(",", request.getDestinationLocationsList()));
         }
-        if (request.getAnnotations() != null && !request.getAnnotations().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "annotations=" + request.getAnnotations();
-        }
+        httpArguments = appendQueryParam(httpArguments, "annotations", request.getAnnotations());
 
         return httpArguments;
     }

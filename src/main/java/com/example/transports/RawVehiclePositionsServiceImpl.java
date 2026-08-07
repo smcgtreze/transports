@@ -14,21 +14,11 @@ public class RawVehiclePositionsServiceImpl extends VehiclePositionsServiceGrpc.
     public String getHttpArguments(VehiclePositionsRequest request) {
         String httpArguments = "";
 
-        if (request.getBoundingBox() != null && !request.getBoundingBox().isEmpty()) {
-            httpArguments += "?bounding_box=" + request.getBoundingBox();
-        }
-        if (request.getRegionName() != null && !request.getRegionName().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "regionName=" + request.getRegionName();
-        }
-        if (request.getRouteId() != null && !request.getRouteId().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "routeId=" + request.getRouteId();
-        }
-        if (request.getCountryIso() != null && !request.getCountryIso().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "countryIso=" + request.getCountryIso();
-        }
-        if (request.getLang() != null && !request.getLang().isEmpty()) {
-            httpArguments += (httpArguments.isEmpty() ? "?" : "&") + "lang=" + request.getLang();
-        }
+        httpArguments = appendQueryParam(httpArguments, "bounding_box", request.getBoundingBox());
+        httpArguments = appendQueryParam(httpArguments, "regionName", request.getRegionName());
+        httpArguments = appendQueryParam(httpArguments, "routeId", request.getRouteId());
+        httpArguments = appendQueryParam(httpArguments, "countryIso", request.getCountryIso());
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
 
         return httpArguments;
     }

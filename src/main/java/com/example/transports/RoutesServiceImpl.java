@@ -13,30 +13,16 @@ public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase imp
 
     @Override
     public String getHttpArguments(Path request) {
-        String httpArguments = "?origin=" + request.getOrigin()
-                + "&destination=" + request.getDestination();
-        
-        if (request.getArrivalTime() != null) {
-            httpArguments += "&arrivalTime=" + request.getArrivalTime();
-        }
-        if (request.getDepartureTime() != null) {
-            httpArguments += "&departureTime=" + request.getDepartureTime();
-        }
-        if (request.getTransfers() != null) {
-            httpArguments += "&transfers=" + request.getTransfers();
-        }
-        if (request.getGeometry() != null) {
-            httpArguments += "&geometry=" + request.getGeometry();
-        }
-        if (request.getTransport() != null) {
-            httpArguments += "&transport=" + request.getTransport();
-        }
-        if (request.getMaxRoutes() != null) {
-            httpArguments += "&maxRoutes=" + request.getMaxRoutes();
-        }
-        if (request.getLang() != null) {
-            httpArguments += "&lang=" + request.getLang();
-        }
+        String httpArguments = "";
+        httpArguments = appendQueryParam(httpArguments, "origin", request.getOrigin());
+        httpArguments = appendQueryParam(httpArguments, "destination", request.getDestination());
+        httpArguments = appendQueryParam(httpArguments, "arrivalTime", request.getArrivalTime());
+        httpArguments = appendQueryParam(httpArguments, "departureTime", request.getDepartureTime());
+        httpArguments = appendQueryParam(httpArguments, "transfers", request.getTransfers());
+        httpArguments = appendQueryParam(httpArguments, "geometry", request.getGeometry());
+        httpArguments = appendQueryParam(httpArguments, "transport", request.getTransport());
+        httpArguments = appendQueryParam(httpArguments, "maxRoutes", request.getMaxRoutes());
+        httpArguments = appendQueryParam(httpArguments, "lang", request.getLang());
 
         return httpArguments;
     }
