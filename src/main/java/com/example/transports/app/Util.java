@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
+import io.grpc.stub.StreamObserver;
 
 public final class Util {
 
@@ -56,5 +57,24 @@ public final class Util {
             frame.pack();
             frame.setVisible(true);
         });
+    }
+
+    public static <T extends Message> StreamObserver<T> createStreamObserver() {
+        return new StreamObserver<T>() {
+            @Override
+            public void onNext(T response) {
+                Util.printMessage(response);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error: " + t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Completed receiving response.");
+            }
+        };
     }
 }
