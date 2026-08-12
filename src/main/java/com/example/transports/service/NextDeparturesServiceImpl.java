@@ -1,10 +1,11 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
 
+import com.example.transports.*;
 public class NextDeparturesServiceImpl extends NextDeparturesServiceGrpc.NextDeparturesServiceImplBase implements ServiceImpl<NextDeparturesRequest, NextDeparturesResponse> {
     @Override
     public void getNextDepartures(NextDeparturesRequest request, StreamObserver<NextDeparturesResponse> responseObserver) {
@@ -47,3 +48,5 @@ public class NextDeparturesServiceImpl extends NextDeparturesServiceGrpc.NextDep
         return NextDeparturesResponse.newBuilder();
     }
 }
+
+

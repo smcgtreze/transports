@@ -1,10 +1,11 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
 
+import com.example.transports.*;
 public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase implements ServiceImpl<Path, Root> {
     @Override
     public void getRoutes(Path request, StreamObserver<Root> responseObserver) {
@@ -47,3 +48,5 @@ public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase imp
         return Root.newBuilder();
     }
 }
+
+

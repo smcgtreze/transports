@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class AlertsServiceImpl extends AlertsServiceGrpc.AlertsServiceImplBase implements ServiceImpl<AlertsRequest, AlertsResponse> {
     @Override
     public void getAlerts(AlertsRequest request, StreamObserver<AlertsResponse> responseObserver) {
@@ -42,3 +43,5 @@ public class AlertsServiceImpl extends AlertsServiceGrpc.AlertsServiceImplBase i
         return AlertsResponse.newBuilder();
     }
 }
+
+

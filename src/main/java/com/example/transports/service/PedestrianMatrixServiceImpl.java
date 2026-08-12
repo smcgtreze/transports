@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class PedestrianMatrixServiceImpl extends PedestrianMatrixServiceGrpc.PedestrianMatrixServiceImplBase implements ServiceImpl<PedestrianMatrixRequest, PedestrianMatrixResponse> {
     @Override
     public void getPedestrianMatrix(PedestrianMatrixRequest request, StreamObserver<PedestrianMatrixResponse> responseObserver) {
@@ -45,3 +46,5 @@ public class PedestrianMatrixServiceImpl extends PedestrianMatrixServiceGrpc.Ped
         return PedestrianMatrixResponse.newBuilder();
     }
 }
+
+

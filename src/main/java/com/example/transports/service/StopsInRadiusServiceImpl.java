@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class StopsInRadiusServiceImpl extends StopsInRadiusServiceGrpc.StopsInRadiusServiceImplBase implements ServiceImpl<StopsInRadiusRequest, StopsInRadiusResponse> {
     @Override
     public void getStopsInRadius(StopsInRadiusRequest request, StreamObserver<StopsInRadiusResponse> responseObserver) {
@@ -40,3 +41,5 @@ public class StopsInRadiusServiceImpl extends StopsInRadiusServiceGrpc.StopsInRa
         return StopsInRadiusResponse.newBuilder();
     }
 }
+
+

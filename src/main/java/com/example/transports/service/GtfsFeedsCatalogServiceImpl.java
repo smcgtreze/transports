@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class GtfsFeedsCatalogServiceImpl extends GtfsFeedsCatalogServiceGrpc.GtfsFeedsCatalogServiceImplBase implements ServiceImpl<GtfsFeedsCatalogRequest, GtfsFeedsCatalogResponse> {
     @Override
     public void getGtfsFeedsCatalog(GtfsFeedsCatalogRequest request, StreamObserver<GtfsFeedsCatalogResponse> responseObserver) {
@@ -35,3 +36,5 @@ public class GtfsFeedsCatalogServiceImpl extends GtfsFeedsCatalogServiceGrpc.Gtf
         return GtfsFeedsCatalogResponse.newBuilder();
     }
 }
+
+

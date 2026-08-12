@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class PedestrianRouteServiceImpl extends PedestrianRouteServiceGrpc.PedestrianRouteServiceImplBase implements ServiceImpl<PedestrianRouteRequest, PedestrianRouteResponse> {
     @Override
     public void getPedestrianRoute(PedestrianRouteRequest request, StreamObserver<PedestrianRouteResponse> responseObserver) {
@@ -46,3 +47,5 @@ public class PedestrianRouteServiceImpl extends PedestrianRouteServiceGrpc.Pedes
         return PedestrianRouteResponse.newBuilder();
     }
 }
+
+

@@ -1,8 +1,9 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
+import com.example.transports.*;
 import com.google.protobuf.util.JsonFormat;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -86,3 +87,5 @@ public interface ServiceImpl<T, V extends Message> {
         return httpResponse.body();
     }
 }
+
+

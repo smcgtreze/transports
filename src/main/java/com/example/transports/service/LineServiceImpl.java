@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class LineServiceImpl extends LineServiceGrpc.LineServiceImplBase implements ServiceImpl<LineRequest, LineResponse> {
     @Override
     public void getLine(LineRequest request, StreamObserver<LineResponse> responseObserver) {
@@ -42,3 +43,5 @@ public class LineServiceImpl extends LineServiceGrpc.LineServiceImplBase impleme
         return LineResponse.newBuilder();
     }
 }
+
+

@@ -1,9 +1,10 @@
-package com.example.transports;
+package com.example.transports.service;
 
 import io.grpc.stub.StreamObserver;
 
 import com.google.protobuf.Message;
 
+import com.example.transports.*;
 public class RawVehiclePositionsServiceImpl extends VehiclePositionsServiceGrpc.VehiclePositionsServiceImplBase implements ServiceImpl<VehiclePositionsRequest, VehiclePositionsResponse> {
     @Override
     public void getVehiclePositions(VehiclePositionsRequest request, StreamObserver<VehiclePositionsResponse> responseObserver) {
@@ -43,3 +44,5 @@ public class RawVehiclePositionsServiceImpl extends VehiclePositionsServiceGrpc.
         return VehiclePositionsResponse.newBuilder();
     }
 }
+
+
