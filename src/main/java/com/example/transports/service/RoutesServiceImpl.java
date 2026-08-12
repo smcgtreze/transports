@@ -6,14 +6,14 @@ import com.google.protobuf.Message;
 
 
 import com.example.transports.*;
-public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase implements ServiceImpl<Path, Root> {
+public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase implements ServiceImpl<RoutesRequest, RoutesResponse> {
     @Override
-    public void getRoutes(Path request, StreamObserver<Root> responseObserver) {
+    public void getRoutes(RoutesRequest request, StreamObserver<RoutesResponse> responseObserver) {
         getService(request, responseObserver);
     }
 
     @Override
-    public String getHttpArguments(Path request) {
+    public String getHttpArguments(RoutesRequest request) {
         String httpArguments = "";
         httpArguments = appendQueryParam(httpArguments, "origin", request.getOrigin());
         httpArguments = appendQueryParam(httpArguments, "destination", request.getDestination());
@@ -34,18 +34,18 @@ public class RoutesServiceImpl extends RouteServiceGrpc.RouteServiceImplBase imp
     }
 
     @Override
-    public String getCapiHost(Path request) {
+    public String getCapiHost(RoutesRequest request) {
         return request.getKey().getCapiHost();
     }
 
     @Override
-    public String getApiKey(Path request) {
+    public String getApiKey(RoutesRequest request) {
         return request.getKey().getApiKey();
     }
 
     @Override
     public Message.Builder newResponseBuilder() {
-        return Root.newBuilder();
+        return RoutesResponse.newBuilder();
     }
 }
 

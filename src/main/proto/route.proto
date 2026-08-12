@@ -8,10 +8,10 @@ option java_package = "com.example.transports";
 option java_multiple_files = true;
 
 service RouteService {
-  rpc GetRoutes(Path) returns (Root);
+  rpc GetRoutes(RoutesRequest) returns (RoutesResponse);
 }
 
-message Root {
+message RoutesResponse {
   repeated Route routes = 1;
   repeated Alert alerts = 2;
   string regionName = 3;
@@ -34,7 +34,7 @@ message Route {
   string regionName = 10;
 }
 
-message Path {
+message RoutesRequest {
   string origin = 1;
   string destination = 2;
   Key key = 3;
